@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
 import Link from 'next/link'
 
+type Project = Awaited<ReturnType<typeof prisma.project.findMany>>[0]
+
 interface ProjectPageProps {
   params: Promise<{ slug: string }>
 }
@@ -18,7 +20,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound()
   }
 
-  const tagList = project.tags ? project.tags.split(',').map(t => t.trim()).filter(Boolean) : []
+  const tagList = project.tags ? project.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : []
 
   // Get related projects (same tags)
   const relatedProjects = tagList.length > 0
@@ -80,7 +82,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
             {tagList.length > 0 && (
               <div className="flex gap-2">
-                {tagList.map((tag) => (
+                {tagList.map((tag: string) => (
                   <Link
                     key={tag}
                     href={`/projects?tag=${encodeURIComponent(tag)}`}
@@ -104,7 +106,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <aside className="border-t border-gray-200 pt-12 mt-16">
             <h2 className="text-sm font-medium text-gray-900 mb-6 uppercase tracking-wide">Related Projects</h2>
             <ul className="space-y-4">
-              {relatedProjects.map((related) => (
+              {relatedProjects.map((related: Project) => (
                 <li key={related.id}>
                   <Link
                     href={`/projects/${related.slug}`}

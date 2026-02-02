@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
 import Link from 'next/link'
 
+type Website = Awaited<ReturnType<typeof prisma.website.findMany>>[0]
+
 interface WebsitePageProps {
   params: Promise<{ slug: string }>
 }
@@ -18,7 +20,7 @@ export default async function WebsitePage({ params }: WebsitePageProps) {
     notFound()
   }
 
-  const tagList = website.tags ? website.tags.split(',').map(t => t.trim()).filter(Boolean) : []
+  const tagList = website.tags ? website.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : []
 
   // Get related websites (same tags)
   const relatedWebsites = tagList.length > 0
@@ -80,7 +82,7 @@ export default async function WebsitePage({ params }: WebsitePageProps) {
             )}
             {tagList.length > 0 && (
               <div className="flex gap-2">
-                {tagList.map((tag) => (
+                {tagList.map((tag: string) => (
                   <Link
                     key={tag}
                     href={`/websites?tag=${encodeURIComponent(tag)}`}
@@ -104,7 +106,7 @@ export default async function WebsitePage({ params }: WebsitePageProps) {
           <aside className="border-t border-gray-200 pt-12 mt-16">
             <h2 className="text-sm font-medium text-gray-900 mb-6 uppercase tracking-wide">Related Websites</h2>
             <ul className="space-y-4">
-              {relatedWebsites.map((related) => (
+              {relatedWebsites.map((related: Website) => (
                 <li key={related.id}>
                   <Link
                     href={`/websites/${related.slug}`}

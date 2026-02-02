@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
 import Link from 'next/link'
 
+type Article = Awaited<ReturnType<typeof prisma.article.findMany>>[0]
+
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
 }
@@ -18,7 +20,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound()
   }
 
-  const tagList = article.tags ? article.tags.split(',').map(t => t.trim()).filter(Boolean) : []
+  const tagList = article.tags ? article.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : []
 
   // Get related articles (same tags)
   const relatedArticles = tagList.length > 0
@@ -57,7 +59,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             )}
             {tagList.length > 0 && (
               <div className="flex gap-2">
-                {tagList.map((tag) => (
+                {tagList.map((tag: string) => (
                   <Link
                     key={tag}
                     href={`/articles?tag=${encodeURIComponent(tag)}`}
@@ -79,7 +81,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           <aside className="border-t border-gray-200 pt-12 mt-16">
             <h2 className="text-sm font-medium text-gray-900 mb-6 uppercase tracking-wide">Related Articles</h2>
             <ul className="space-y-4">
-              {relatedArticles.map((related) => (
+              {relatedArticles.map((related: Article) => (
                 <li key={related.id}>
                   <Link
                     href={`/articles/${related.slug}`}

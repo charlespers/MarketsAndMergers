@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db'
 import Link from 'next/link'
-import type { Website } from '@prisma/client'
+
+type Website = Awaited<ReturnType<typeof prisma.website.findMany>>[0]
 
 // Force dynamic rendering to avoid caching issues
 export const dynamic = 'force-dynamic'

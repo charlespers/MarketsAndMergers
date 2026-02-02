@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db'
 import Link from 'next/link'
-import type { Website } from '@prisma/client'
+
+type Website = Awaited<ReturnType<typeof prisma.website.findMany>>[0]
 
 export default async function WebsitesPage() {
   let websites: Website[] = []

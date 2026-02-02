@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db'
 import Link from 'next/link'
-import { Project } from '@prisma/client'
+
+type Project = Awaited<ReturnType<typeof prisma.project.findMany>>[0]
 
 // Force dynamic rendering to avoid caching issues
 export const dynamic = 'force-dynamic'
@@ -51,7 +52,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
     allTags = Array.from(
       new Set(
         projects
-          .flatMap(item => item.tags?.split(',').map(t => t.trim()) || [])
+          .flatMap(item => item.tags?.split(',').map((t: string) => t.trim()) || [])
           .filter(Boolean)
       )
     ).sort()
@@ -138,7 +139,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                   )}
                   {project.tags && (
                     <div className="flex gap-2 flex-wrap">
-                      {project.tags.split(',').slice(0, 3).map((tag) => (
+                      {project.tags.split(',').slice(0, 3).map((tag: string) => (
                         <span
                           key={tag.trim()}
                           className="px-2 py-0.5 bg-gray-100 text-gray-700 rounded-sm text-xs font-light uppercase tracking-wide"

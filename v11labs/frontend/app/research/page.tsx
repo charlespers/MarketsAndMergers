@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db'
 import ArticlesList from '@/components/ArticlesList'
-import { Research } from '@prisma/client'
+
+type Research = Awaited<ReturnType<typeof prisma.research.findMany>>[0]
 
 // Force dynamic rendering to avoid caching issues
 export const dynamic = 'force-dynamic'
@@ -51,7 +52,7 @@ export default async function ResearchPage({ searchParams }: ResearchPageProps) 
     allTags = Array.from(
       new Set(
         research
-          .flatMap(item => item.tags?.split(',').map(t => t.trim()) || [])
+          .flatMap(item => item.tags?.split(',').map((t: string) => t.trim()) || [])
           .filter(Boolean)
       )
     ).sort()

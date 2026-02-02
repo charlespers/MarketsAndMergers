@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation'
 import EnhancedMarkdown from '@/components/EnhancedMarkdown'
 import Link from 'next/link'
 
+type Research = Awaited<ReturnType<typeof prisma.research.findMany>>[0]
+
 interface ResearchPageProps {
   params: Promise<{ slug: string }>
 }
@@ -18,7 +20,7 @@ export default async function ResearchPage({ params }: ResearchPageProps) {
     notFound()
   }
 
-  const tagList = research.tags ? research.tags.split(',').map(t => t.trim()).filter(Boolean) : []
+  const tagList = research.tags ? research.tags.split(',').map((t: string) => t.trim()).filter(Boolean) : []
 
   // Get related research (same tags)
   const relatedResearch = tagList.length > 0
@@ -57,7 +59,7 @@ export default async function ResearchPage({ params }: ResearchPageProps) {
             )}
             {tagList.length > 0 && (
               <div className="flex gap-2">
-                {tagList.map((tag) => (
+                {tagList.map((tag: string) => (
                   <Link
                     key={tag}
                     href={`/research?tag=${encodeURIComponent(tag)}`}
@@ -79,7 +81,7 @@ export default async function ResearchPage({ params }: ResearchPageProps) {
           <aside className="border-t border-gray-200 pt-12 mt-16">
             <h2 className="text-sm font-medium text-gray-900 mb-6 uppercase tracking-wide">Related Research</h2>
             <ul className="space-y-4">
-              {relatedResearch.map((related) => (
+              {relatedResearch.map((related: Research) => (
                 <li key={related.id}>
                   <Link
                     href={`/research/${related.slug}`}
