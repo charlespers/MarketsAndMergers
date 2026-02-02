@@ -1,15 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 
-const source = path.join(__dirname, 'configs', 'Images', 'logo.png');
+const source = path.join(__dirname, 'configs', 'Images', 'markets_logo.png');
 const destDir = path.join(__dirname, 'public', 'configs', 'Images');
-const dest = path.join(destDir, 'logo.png');
+const dest = path.join(destDir, 'markets_logo.png');
 
 try {
   // Check if source exists
   if (!fs.existsSync(source)) {
     console.warn('⚠️  Logo source not found at:', source);
-    console.warn('   Skipping logo copy. Make sure configs/Images/logo.png exists.');
+    console.warn('   Skipping logo copy. Make sure configs/Images/markets_logo.png exists.');
     // Don't exit with error - allow build to continue
     process.exit(0);
   }
@@ -21,7 +21,7 @@ try {
   
   // Copy the logo
   fs.copyFileSync(source, dest);
-  console.log('✅ Logo copied successfully to public/configs/Images/logo.png');
+  console.log('✅ Logo copied successfully to public/configs/Images/markets_logo.png');
 } catch (error) {
   console.error('❌ Error copying logo:', error.message);
   // Don't exit with error - allow build to continue even if logo copy fails

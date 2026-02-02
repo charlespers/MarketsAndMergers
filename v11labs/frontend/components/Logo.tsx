@@ -12,7 +12,7 @@ export default function Logo() {
 
   return (
     <Image
-      src="/configs/Images/logo.png"
+      src="/configs/Images/markets_logo.png"
       alt="Logo"
       width={200}
       height={200}

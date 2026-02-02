@@ -24,10 +24,10 @@ export async function generateMetadata(): Promise<Metadata> {
       description: config.description || "Technology articles and insights",
       icons: {
         icon: [
-          { url: '/configs/Images/logo.png', type: 'image/png' },
+          { url: '/configs/Images/markets_logo.png', type: 'image/png' },
         ],
-        shortcut: '/configs/Images/logo.png',
-        apple: '/configs/Images/logo.png',
+        shortcut: '/configs/Images/markets_logo.png',
+        apple: '/configs/Images/markets_logo.png',
       },
     };
   } catch (error) {
