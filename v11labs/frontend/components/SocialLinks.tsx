@@ -2,7 +2,7 @@ interface SocialLinksProps {
   instagram?: string
   twitter?: string
   linkedin?: string
-  email?: strings
+  email?: string
 }
 
 // Comment
