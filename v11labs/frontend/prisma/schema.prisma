@@ -1,0 +1,72 @@
+// This is your Prisma schema file
+// For local development: Use SQLite (DATABASE_URL="file:./dev.db")
+// For Vercel production: Use PostgreSQL (DATABASE_URL="postgresql://...")
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   // Markdown content
+  description String?
+  tags        String?  // Comma-separated tags: "gpu, hardware, tech"
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("articles")
+}
+
+model Research {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   // Markdown content
+  description String?
+  tags        String?  // Comma-separated tags: "research, ai, tech"
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("research")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   // Markdown content (article attached to project)
+  description String?
+  imageUrl    String?  @map("image_url")
+  videoUrl    String?  @map("video_url")
+  tags        String?  // Comma-separated tags
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+model Website {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   // Markdown content (article attached to website)
+  description String?
+  imageUrl    String?  @map("image_url")
+  videoUrl    String?  @map("video_url")
+  tags        String?  // Comma-separated tags
+  publishedAt DateTime? @map("published_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("websites")
+}
