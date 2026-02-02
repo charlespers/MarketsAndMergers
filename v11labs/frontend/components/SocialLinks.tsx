@@ -2,8 +2,12 @@ interface SocialLinksProps {
   instagram?: string
   twitter?: string
   linkedin?: string
-  email?: string
+  email?: strings
 }
+
+// Comment
+
+// Comment
 
 // Professional SVG icons matching the minimalist, monochromatic style
 const InstagramIcon = ({ className }: { className?: string }) => (
